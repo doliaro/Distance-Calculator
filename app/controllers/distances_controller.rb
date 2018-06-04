@@ -27,6 +27,7 @@ class DistancesController < ApplicationController
     end
   end
 
+  # Destroy a single destination calculation
   def destroy
     @distance.destroy
     respond_to do |format|
