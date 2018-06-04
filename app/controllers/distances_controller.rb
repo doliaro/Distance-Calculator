@@ -23,6 +23,10 @@ class DistancesController < ApplicationController
     @distance.miles = Geocoder::Calculations.distance_between(@distance.start_address, @distance.destination_address).round(2)
     @distance.time = formatted_duration(directions.drive_time_in_minutes)
 
+    if directions.drive_time_in_minutes == 0
+      @distance.time = "#{@distance.miles/60} driving hours"
+    end
+
     respond_to do |format|
       if @distance.save
         format.html { redirect_to root_path, notice: 'Distance was successfully created.' }
