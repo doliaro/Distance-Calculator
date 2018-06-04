@@ -23,8 +23,12 @@ class DistancesController < ApplicationController
     @distance.miles = Geocoder::Calculations.distance_between(@distance.start_address, @distance.destination_address).round(2)
     @distance.time = formatted_duration(directions.drive_time_in_minutes)
 
+    # If query fails to generate travel time, approximate it with driving hours
+    # NOTE: needs better solution
     if directions.drive_time_in_minutes == 0
-      @distance.time = "#{@distance.miles/60} driving hours"
+      hours = @distance.miles/60
+      hours = hours.round(2)
+      @distance.time = "#{hours} driving hours"
     end
 
     respond_to do |format|
