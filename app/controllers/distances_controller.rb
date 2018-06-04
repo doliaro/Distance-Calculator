@@ -13,8 +13,8 @@ class DistancesController < ApplicationController
 
     # Query the GoogleAPI to get distance and time from start and destination addresses
     directions = GoogleDirections.new(@distance.start_address, @distance.destination_address)
-    @distance.miles = directions.distance_in_miles.round
-    @distance.time = directions.drive_time_in_minutes/60.round
+    @distance.miles = directions.distance_in_miles.round(3)/100
+    @distance.time = directions.drive_time_in_minutes.round(3)/60
 
     respond_to do |format|
       if @distance.save
