@@ -18,11 +18,15 @@ class DistancesController < ApplicationController
   def create
     @distance = Distance.new(distance_params)
 
+    # 52.520007, 13.404954 = Germany
+    # 50.075538, 14.437800 = Prague
+
+    @ride = Geocoder::Calculations.distance_between(@distance.start_address, @distance.destination_address)
+
     # Query the GoogleAPI to get distance and time from start and destination addresses
     directions = GoogleDirections.new(@distance.start_address, @distance.destination_address)
-    @distance.miles = directions.distance_in_miles.round(2)/100
+    @distance.miles = directions.distance_in_miles.round(2)
     @distance.time = formatted_duration(directions.drive_time_in_minutes)
-
     respond_to do |format|
       if @distance.save
         format.html { redirect_to root_path, notice: 'Distance was successfully created.' }
