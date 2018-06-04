@@ -1,7 +1,7 @@
 # README
 
-* Ruby version - 2.4.1
-* Rails version - 5.2.0
+Ruby version - 2.4.1
+ | Rails version - 5.2.0
 
 * Clone repository into local directory
 * Run -> bin/rails db:migrate
