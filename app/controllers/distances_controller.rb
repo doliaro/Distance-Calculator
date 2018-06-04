@@ -8,13 +8,20 @@ class DistancesController < ApplicationController
     @distance = Distance.new
   end
 
+  # Convert total minutes to hours and minutes
+  def formatted_duration(total_minute)
+    hours = total_minute / 60
+    minutes = (total_minute) % 60
+    "#{ hours }h #{ minutes }min"
+  end
+
   def create
     @distance = Distance.new(distance_params)
 
     # Query the GoogleAPI to get distance and time from start and destination addresses
     directions = GoogleDirections.new(@distance.start_address, @distance.destination_address)
-    @distance.miles = directions.distance_in_miles.round(3)/100
-    @distance.time = directions.drive_time_in_minutes.round(3)/60
+    @distance.miles = directions.distance_in_miles.round(2)/100
+    @distance.time = formatted_duration(directions.drive_time_in_minutes)
 
     respond_to do |format|
       if @distance.save
