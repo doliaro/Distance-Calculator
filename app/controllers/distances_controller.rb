@@ -26,8 +26,7 @@ class DistancesController < ApplicationController
     # If query fails to generate travel time, approximate it with driving hours
     # NOTE: needs better solution
     if directions.drive_time_in_minutes == 0
-      hours = @distance.miles/60
-      hours = hours.round(2)
+      hours = (@distance.miles/60).round(2)
       @distance.time = "#{hours} driving hours"
     end
 
