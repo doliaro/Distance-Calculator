@@ -15,8 +15,6 @@
         <th>Distance(Miles)</th>
         <th>Distance(Time)</th>
         <th></th>
-        <th></th>
-        <th></th>
       </tr>
     </thead>
 
@@ -26,10 +24,8 @@
         <td><%= distance.start_address %></td>
         <td><%= distance.destination_address %></td>
         <td><%= distance.miles %> Miles </td>
-        <td><%= distance.time/60 %> Hours</td>
-        <td><%= link_to 'Show', distance %></td>
-        <td><%= link_to 'Edit', edit_distance_path(distance) %></td>
-        <td><%= link_to 'Destroy', distance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= distance.time %> Hours</td>
+        <td><%= link_to 'Delete', distance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% end %>
     </tbody>
   </table>

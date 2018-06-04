@@ -4,14 +4,8 @@ class DistancesController < ApplicationController
     @distances = Distance.all
   end
 
-  def show
-  end
-
   def new
     @distance = Distance.new
-  end
-
-  def edit
   end
 
   def create
@@ -19,27 +13,15 @@ class DistancesController < ApplicationController
 
     # Query the GoogleAPI to get distance and time from start and destination addresses
     directions = GoogleDirections.new(@distance.start_address, @distance.destination_address)
-    @distance.miles = directions.distance_in_miles
-    @distance.time = directions.drive_time_in_minutes
+    @distance.miles = directions.distance_in_miles.round
+    @distance.time = directions.drive_time_in_minutes/60.round
 
     respond_to do |format|
       if @distance.save
-        format.html { redirect_to @distance, notice: 'Distance was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Distance was successfully created.' }
         format.json { render :show, status: :created, location: @distance }
       else
         format.html { render :new }
-        format.json { render json: @distance.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @distance.update(distance_params)
-        format.html { redirect_to @distance, notice: 'Distance was successfully updated.' }
-        format.json { render :show, status: :ok, location: @distance }
-      else
-        format.html { render :edit }
         format.json { render json: @distance.errors, status: :unprocessable_entity }
       end
     end
