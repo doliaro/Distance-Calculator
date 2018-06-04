@@ -1,0 +1,35 @@
+<div class="page-header">
+  <%= link_to new_distance_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Distance
+  <% end %>
+  <h1>Listing distances</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Start address</th>
+            <th>Destination address</th>
+            <th>Distance(Miles)</th>
+            <th>Distance(Time)</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @distances) do |distance| %>
+            <td><%= distance.start_address %></td>
+            <td><%= distance.destination_address %></td>
+            <td><%= distance.miles %> Miles </td>
+            <td><%= distance.time/60 %> Hours</td>
+            <td><%= link_to 'Show', distance %></td>
+        <td><%= link_to 'Edit', edit_distance_path(distance) %></td>
+        <td><%= link_to 'Destroy', distance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>
