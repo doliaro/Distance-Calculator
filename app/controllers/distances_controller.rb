@@ -10,8 +10,8 @@ class DistancesController < ApplicationController
 
   # Convert total minutes to hours and minutes
   def formatted_duration(total_minute)
-    hours = total_minute / 60
-    minutes = (total_minute) % 60
+    hours = (total_minute / 60).round
+    minutes = ((total_minute) % 60).round
     "#{ hours }h #{ minutes }min"
   end
 
@@ -26,8 +26,7 @@ class DistancesController < ApplicationController
     # If query fails to generate travel time, approximate it with driving hours
     # NOTE: needs better solution
     if directions.drive_time_in_minutes == 0
-      hours = (@distance.miles/60).round(2)
-      @distance.time = "#{hours} driving hours"
+      @distance.time = formatted_duration(@distance.miles)
     end
 
     respond_to do |format|
